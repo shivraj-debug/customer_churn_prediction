@@ -40,6 +40,16 @@ input_data = np.array([[credit_score, geo, gen, age, tenure,
 
 if st.button("Predict"):
     result = model.predict(input_data)[0]
+    prob = model.predict_proba(input_data)[0][1]
+
+    st.write(f"Churn Probability: {prob:.2f}")
+
+    if prob > 0.7:
+        st.warning("⚠️ High Risk Customer")
+    elif prob > 0.4:
+        st.info("⚡ Medium Risk")
+    else:
+        st.success("✅ Low Risk")
 
     if result == 1:
         st.error("❌ Customer will CHURN")
